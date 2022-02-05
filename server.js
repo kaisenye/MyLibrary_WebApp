@@ -6,7 +6,6 @@ const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 
-
 const indexRouter = require('./routes/index')
 
 app.set('view engine', 'ejs')
@@ -16,15 +15,15 @@ app.use(expressLayouts)
 app.use(express.static('public')) 
 
 
-// setup mongoose
+// set up mongoose
 const mongoose = require('mongoose')
-const req = require('express/lib/request')
-mongoose.connect(process.nextTick.DATABASE_URL, {useNewUrlParser: true})
+mongoose.connect(process.env.DATABASE_URL)
+// check if there are errors
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
-
+// , {useNewUrlParser: true}
 
 // get router from index.js
 app.use('/', indexRouter)
